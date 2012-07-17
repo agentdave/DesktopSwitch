@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B40604615B529E600C47490 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B40604515B529E600C47490 /* Cocoa.framework */; };
+		0B40605015B529E600C47490 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B40604E15B529E600C47490 /* InfoPlist.strings */; };
+		0B40605315B529E600C47490 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B40605215B529E600C47490 /* main.m */; };
+		0B40605615B529E600C47490 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0B40605415B529E600C47490 /* Credits.rtf */; };
+		0B40605915B529E600C47490 /* DesktopSwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B40605815B529E600C47490 /* DesktopSwitchAppDelegate.m */; };
+		0B40606315B529E600C47490 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B40604515B529E600C47490 /* Cocoa.framework */; };
+		0B40608015B52FC700C47490 /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B40607F15B52FC700C47490 /* on.png */; };
+		0B40608215B52FCB00C47490 /* off.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B40608115B52FCB00C47490 /* off.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B40606415B529E600C47490 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B40603815B529E600C47490 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B40604015B529E600C47490;
+			remoteInfo = DesktopSwitch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0B40604115B529E600C47490 /* DesktopSwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopSwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B40604515B529E600C47490 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		0B40604815B529E600C47490 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		0B40604915B529E600C47490 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		0B40604A15B529E600C47490 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0B40604D15B529E600C47490 /* DesktopSwitch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DesktopSwitch-Info.plist"; sourceTree = "<group>"; };
+		0B40604F15B529E600C47490 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0B40605115B529E600C47490 /* DesktopSwitch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DesktopSwitch-Prefix.pch"; sourceTree = "<group>"; };
+		0B40605215B529E600C47490 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0B40605515B529E600C47490 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		0B40605715B529E600C47490 /* DesktopSwitchAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopSwitchAppDelegate.h; sourceTree = "<group>"; };
+		0B40605815B529E600C47490 /* DesktopSwitchAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesktopSwitchAppDelegate.m; sourceTree = "<group>"; };
+		0B40606215B529E600C47490 /* DesktopSwitchTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DesktopSwitchTests.octest; path = /Users/ackerman/Projects/DesktopSwitch/build/Release/DesktopSwitchTests.octest; sourceTree = "<absolute>"; };
+		0B40607F15B52FC700C47490 /* on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on.png; sourceTree = "<group>"; };
+		0B40608115B52FCB00C47490 /* off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = off.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0B40603E15B529E600C47490 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B40604615B529E600C47490 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B40605E15B529E600C47490 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B40606315B529E600C47490 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B40603615B529E600C47490 = {
+			isa = PBXGroup;
+			children = (
+				0B40604B15B529E600C47490 /* DesktopSwitch */,
+				0B40604415B529E600C47490 /* Frameworks */,
+				0B40604215B529E600C47490 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0B40604215B529E600C47490 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B40604115B529E600C47490 /* DesktopSwitch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0B40604415B529E600C47490 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0B40604515B529E600C47490 /* Cocoa.framework */,
+				0B40604715B529E600C47490 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0B40604715B529E600C47490 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0B40604815B529E600C47490 /* AppKit.framework */,
+				0B40604915B529E600C47490 /* CoreData.framework */,
+				0B40604A15B529E600C47490 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		0B40604B15B529E600C47490 /* DesktopSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				0B40605715B529E600C47490 /* DesktopSwitchAppDelegate.h */,
+				0B40605815B529E600C47490 /* DesktopSwitchAppDelegate.m */,
+				0B40604C15B529E600C47490 /* Supporting Files */,
+			);
+			path = DesktopSwitch;
+			sourceTree = "<group>";
+		};
+		0B40604C15B529E600C47490 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0B40604D15B529E600C47490 /* DesktopSwitch-Info.plist */,
+				0B40604E15B529E600C47490 /* InfoPlist.strings */,
+				0B40605115B529E600C47490 /* DesktopSwitch-Prefix.pch */,
+				0B40605215B529E600C47490 /* main.m */,
+				0B40605415B529E600C47490 /* Credits.rtf */,
+				0B40607F15B52FC700C47490 /* on.png */,
+				0B40608115B52FCB00C47490 /* off.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0B40604015B529E600C47490 /* DesktopSwitch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B40607315B529E700C47490 /* Build configuration list for PBXNativeTarget "DesktopSwitch" */;
+			buildPhases = (
+				0B40603D15B529E600C47490 /* Sources */,
+				0B40603E15B529E600C47490 /* Frameworks */,
+				0B40603F15B529E600C47490 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DesktopSwitch;
+			productName = DesktopSwitch;
+			productReference = 0B40604115B529E600C47490 /* DesktopSwitch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0B40606115B529E600C47490 /* DesktopSwitchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B40607615B529E700C47490 /* Build configuration list for PBXNativeTarget "DesktopSwitchTests" */;
+			buildPhases = (
+				0B40605D15B529E600C47490 /* Sources */,
+				0B40605E15B529E600C47490 /* Frameworks */,
+				0B40605F15B529E600C47490 /* Resources */,
+				0B40606015B529E600C47490 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B40606515B529E600C47490 /* PBXTargetDependency */,
+			);
+			name = DesktopSwitchTests;
+			productName = DesktopSwitchTests;
+			productReference = 0B40606215B529E600C47490 /* DesktopSwitchTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0B40603815B529E600C47490 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B40603B15B529E600C47490 /* Build configuration list for PBXProject "DesktopSwitch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0B40603615B529E600C47490;
+			productRefGroup = 0B40604215B529E600C47490 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0B40604015B529E600C47490 /* DesktopSwitch */,
+				0B40606115B529E600C47490 /* DesktopSwitchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0B40603F15B529E600C47490 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B40605015B529E600C47490 /* InfoPlist.strings in Resources */,
+				0B40605615B529E600C47490 /* Credits.rtf in Resources */,
+				0B40608015B52FC700C47490 /* on.png in Resources */,
+				0B40608215B52FCB00C47490 /* off.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B40605F15B529E600C47490 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B40606015B529E600C47490 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0B40603D15B529E600C47490 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B40605315B529E600C47490 /* main.m in Sources */,
+				0B40605915B529E600C47490 /* DesktopSwitchAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B40605D15B529E600C47490 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B40606515B529E600C47490 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B40604015B529E600C47490 /* DesktopSwitch */;
+			targetProxy = 0B40606415B529E600C47490 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0B40604E15B529E600C47490 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0B40604F15B529E600C47490 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0B40605415B529E600C47490 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0B40605515B529E600C47490 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0B40607115B529E700C47490 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0B40607215B529E700C47490 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0B40607415B529E700C47490 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DesktopSwitch/DesktopSwitch-Prefix.pch";
+				INFOPLIST_FILE = "DesktopSwitch/DesktopSwitch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0B40607515B529E700C47490 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DesktopSwitch/DesktopSwitch-Prefix.pch";
+				INFOPLIST_FILE = "DesktopSwitch/DesktopSwitch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		0B40607715B529E700C47490 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DesktopSwitch.app/Contents/MacOS/DesktopSwitch";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DesktopSwitchTests/DesktopSwitchTests-Prefix.pch";
+				INFOPLIST_FILE = "DesktopSwitchTests/DesktopSwitchTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		0B40607815B529E700C47490 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DesktopSwitch.app/Contents/MacOS/DesktopSwitch";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DesktopSwitchTests/DesktopSwitchTests-Prefix.pch";
+				INFOPLIST_FILE = "DesktopSwitchTests/DesktopSwitchTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B40603B15B529E600C47490 /* Build configuration list for PBXProject "DesktopSwitch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B40607115B529E700C47490 /* Debug */,
+				0B40607215B529E700C47490 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B40607315B529E700C47490 /* Build configuration list for PBXNativeTarget "DesktopSwitch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B40607415B529E700C47490 /* Debug */,
+				0B40607515B529E700C47490 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0B40607615B529E700C47490 /* Build configuration list for PBXNativeTarget "DesktopSwitchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B40607715B529E700C47490 /* Debug */,
+				0B40607815B529E700C47490 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0B40603815B529E600C47490 /* Project object */;
+}
