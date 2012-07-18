@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface DesktopSwitchAppDelegate : NSObject <NSApplicationDelegate> {
+	NSImage* _onImage;
+	NSImage* _offImage;
 }
 
 @property (assign) NSStatusItem* statusItem;

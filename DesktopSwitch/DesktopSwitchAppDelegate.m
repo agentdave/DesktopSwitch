@@ -28,7 +28,8 @@
 - (void)quit:(id)sender;
 -(BOOL) socketActive;
 - (NSMenu *) createMenu;
-- (void) sendRequest:(NSString*)value;
+- (NSString*) sendRequest:(NSString*)service action:(NSString*)action value:(NSString*)value;
+- (void) updateStatus:(NSString*)status forMenuItem:(NSMenuItem*)switchItem;
 
 @end
 
@@ -42,17 +43,15 @@
 	NSMenu *menu = [[NSMenu alloc] init];
 	NSMenuItem *menuItem;
 	
-	menuItem = [menu addItemWithTitle:@"Turn On"
-							   action:@selector(turnOn:)
+	NSString* switchName = [self sendRequest:@"basicevent" action:@"GetFriendlyName" value:nil];
+	menuItem = [menu addItemWithTitle:switchName
+							   action:@selector(toggleSwitch:)
 						keyEquivalent:@""];	
 	[menuItem setTarget:self];
-	
-	
-	menuItem = [menu addItemWithTitle:@"Turn Off"
-							   action:@selector(turnOff:)
-						keyEquivalent:@""];
-	[menuItem setTarget:self];
-	
+
+	NSString* status = [self sendRequest:@"basicevent" action:@"GetBinaryState" value:nil];
+	[self updateStatus:status forMenuItem:menuItem];
+
 	[menu addItem:[NSMenuItem separatorItem]];
 
 	menuItem = [menu addItemWithTitle:@"Settings..."
@@ -72,14 +71,14 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-	NSMenu *menu = [self createMenu];
-	
+{	
 	self.statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+
+	NSMenu *menu = [self createMenu];
 	[self.statusItem setMenu:menu];
+
 	[self.statusItem setHighlightMode:YES];
 	[self.statusItem setToolTip:@"Desktop Switch"];
-	[self sendRequest:nil];
 }
 
 - (void)openSettings:(id)sender {
@@ -87,33 +86,33 @@
 }
 
 - (void) turnOn:(id)sender {
-	[self sendRequest:@"1"];
+	NSString* status = [self sendRequest:@"basicevent" action:@"SetBinaryState" value:@"1"];
+	[self updateStatus:status forMenuItem:sender];
 }
 
 - (void) turnOff:(id)sender {
-	[self sendRequest:@"0"];
+	NSString* status = [self sendRequest:@"basicevent" action:@"SetBinaryState" value:@"0"];
+	[self updateStatus:status forMenuItem:sender];
+}
+
+- (void) toggleSwitch:(id)sender {
+	NSMenuItem* switchItem = sender;
+	if([switchItem state] == NSOnState) {
+		[self turnOff:sender];
+	} else {
+		[self turnOn:sender];
+	}
 }
 
 // Because everyone loves methods that are wayyyyy too long ;-)
-- (void) sendRequest:(NSString*)value {
+- (NSString*) sendRequest:(NSString*)service action:(NSString*)action value:(NSString*)value {
 	// TODO: Make this into an actual settings panel
 	NSString* ipAddress = @"10.0.1.24";
 	NSString* port = @"49152";
-	
-	// Ugghh... if this application was any more complex, I couldn't be getting away with stuff like
-	// this, but since we only want to (a) set the state to "on" or "off" or (b) get the current state,
-	// it'll do...
-	NSString* action = nil;
-	if(value) {
-		action = @"SetBinaryState";
-	} else {
-		action = @"GetBinaryState";
-	}
 
 	// If this supported more than the Set/GetBinaryState actions, I'd probably want to throw the following out and
 	// look into some real SOAP APIs. Note that this stuff seems to use the UPnP protocol, so theoretically an API
 	// made for that would work as well.
-	NSString* service = @"basicevent";
 	NSString* arguments = [NSString stringWithFormat:@"<BinaryState>%@</BinaryState>", value];
 
 	NSString* requestBody = [NSString stringWithFormat:@"<?xml version='1.0'encoding='utf-8'?>"
@@ -160,15 +159,36 @@
 	NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];	
 	if(response) {
 		NSXMLDocument *document = [[NSXMLDocument alloc] initWithData:response options:NSXMLDocumentTidyHTML error:&error];
+		NSLog(@"response: %@", document);
 		NSXMLElement* rootNode = [document rootElement];
 		NSArray* states = [rootNode nodesForXPath:@"//body" error:&error];
 		if([states count] == 1) {
 			NSXMLElement* element = [states objectAtIndex:0];
-			if([@"1" isEqualToString:[element stringValue]]) {
-				[self.statusItem setImage:[NSImage imageNamed:@"on"]];
-			} else {
-				[self.statusItem setImage:[NSImage imageNamed:@"off"]];
-			}
+			return [element stringValue];
+		}
+	}
+	
+	return nil;
+}
+
+- (void) updateStatus:(NSString*)status forMenuItem:(NSMenuItem*)switchItem {
+	if(!_onImage) {
+		_onImage = [NSImage imageNamed:@"on"];
+		[_onImage setSize:NSMakeSize(20, 20)];
+	}
+
+	if(!_offImage) {
+		_offImage = [NSImage imageNamed:@"off"];
+		[_offImage setSize:NSMakeSize(20, 20)];
+	}
+
+	if(status) {
+		if([status isEqualToString:@"1"]) {
+			if(switchItem) [switchItem setState:NSOnState];
+			[self.statusItem setImage:_onImage];
+		} else {
+			if(switchItem) [switchItem setState:NSOffState];
+			[self.statusItem setImage:_offImage];
 		}
 	}
 }
