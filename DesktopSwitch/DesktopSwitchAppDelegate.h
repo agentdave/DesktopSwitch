@@ -8,11 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SettingsWindowController;
+
 @interface DesktopSwitchAppDelegate : NSObject <NSApplicationDelegate> {
 	NSImage* _onImage;
 	NSImage* _offImage;
+
+	NSString* ipAddress;
+	NSString* port;
 }
 
-@property (assign) NSStatusItem* statusItem;
+@property (retain) NSStatusItem* statusItem;
+@property (retain) SettingsWindowController* settingsController;
 
 @end
