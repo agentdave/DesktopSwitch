@@ -24,6 +24,7 @@ static dispatch_queue_t _queue = nil;
 
 @synthesize spinner;
 @synthesize port;
+@synthesize currentScanStatus;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -46,6 +47,7 @@ static dispatch_queue_t _queue = nil;
 - (IBAction)scanForDevices:(id)sender {
 	if(_scanning) {
 		_scanning = NO;
+		self.currentScanStatus = @"";
 		[self.spinner setHidden:YES];
 		[self.spinner stopAnimation:self];
 		[sender setTitle:@"Scan"];
@@ -57,32 +59,40 @@ static dispatch_queue_t _queue = nil;
 		[sender setTitle:@"Stop Scanning"];
 	}
 
-	NSString* ipRoot = [self systemCommand:@"ifconfig | grep inet | grep broadcast | "
-											"sed -E 's/.*inet (([0-9]+\\.){3}).*/\\1/'"];
-	
+	// Ugghhh... it's hacky, but it works. I have my excuses. If I were to do it over again, I might
+	// use [[NSHost currentHost] addresses] with a 3rd party regex library (for 10.6 support) or a custom
+	// IPv4 filter method to get the valid IPv4 addresses I'd want to use for the scan. Or maybe the
+	// overly complex looking SystemConfiguration framework with SCNetworkConnectionCopyExtendedStatus.
+	NSString* ipRootString = [self systemCommand:@"ifconfig | grep inet | grep broadcast | "
+												"sed -E 's/.*inet (([0-9]+\\.){3}).*/\\1/'"];
+	NSArray* ipRoots = [ipRootString componentsSeparatedByString:@"\n"];
 	dispatch_async(_queue, ^{
-		for (NSUInteger i = 1; i < 255; i++) {
-			if(!_scanning) {
-				break;
-			}
+		for (NSString* ipRoot in ipRoots) {
+			for (NSUInteger i = 1; i < 255; i++) {
+				if(!_scanning) {
+					break;
+				}
 
-			NSString* attemptIP = [NSString stringWithFormat:@"%@%u", ipRoot, i];
-			NSString* switchName = [SwitchCommunication sendRequest:attemptIP
-															   port:self.port
-															service:@"basicevent" 
-															 action:@"GetFriendlyName" 
-															  value:nil
-															timeout:0.5];
-			if(switchName) {
-				NSArray* ipAddresses = [[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Devices.IPAddress"];
-				if([ipAddresses containsObject:attemptIP]) {
-					NSLog(@"Already have a setting for: %@", attemptIP);
-				} else {
-					NSLog(@"Found %@ at %@:%@", switchName, attemptIP, self.port);
-					[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:self.port];
+				NSString* attemptIP = [NSString stringWithFormat:@"%@%u", ipRoot, i];
+				self.currentScanStatus = [NSString stringWithFormat:@"Scanning: %@:%@", attemptIP, self.port];
+				NSString* switchName = [SwitchCommunication sendRequest:attemptIP
+																   port:self.port
+																service:@"basicevent" 
+																 action:@"GetFriendlyName" 
+																  value:nil
+																timeout:0.5];
+				if(switchName) {
+					NSArray* ipAddresses = [[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Devices.IPAddress"];
+					if([ipAddresses containsObject:attemptIP]) {
+						NSLog(@"Already have a setting for: %@", attemptIP);
+					} else {
+						NSLog(@"Found %@ at %@:%@", switchName, attemptIP, self.port);
+						[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:self.port];
+					}
 				}
 			}
 		}
+		self.currentScanStatus = @"";
 		_scanning = NO;
 		[self.spinner setHidden:YES];
 		[self.spinner stopAnimation:self];

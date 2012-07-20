@@ -17,5 +17,6 @@
 
 @property (retain) IBOutlet NSProgressIndicator* spinner;
 @property (retain) NSString* port;
+@property (retain) NSString* currentScanStatus;
 
 @end
