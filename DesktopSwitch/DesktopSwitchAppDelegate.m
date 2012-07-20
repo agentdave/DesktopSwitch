@@ -135,8 +135,9 @@
 	if(!self.settingsController) {
 		self.settingsController = [[SettingsWindowController alloc] initWithWindowNibName:@"Settings"];
 	}
-	[self.settingsController showWindow:nil];
 	[NSApp activateIgnoringOtherApps:YES];
+	[self.settingsController showWindow:sender];
+	[[self.settingsController window] makeKeyAndOrderFront:sender];
 }
 
 - (void) turnOn:(id)sender {

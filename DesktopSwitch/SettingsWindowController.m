@@ -23,13 +23,14 @@ static dispatch_queue_t _queue = nil;
 }
 
 @synthesize spinner;
+@synthesize port;
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
 		_scanning = NO;
-		_port = @"49152"; // Seems to be a decent default port for UPnP
+		self.port = @"49152"; // Seems to be a decent default port for UPnP
     }
     
     return self;
@@ -67,7 +68,7 @@ static dispatch_queue_t _queue = nil;
 
 			NSString* attemptIP = [NSString stringWithFormat:@"%@%u", ipRoot, i];
 			NSString* switchName = [SwitchCommunication sendRequest:attemptIP
-															   port:_port
+															   port:self.port
 															service:@"basicevent" 
 															 action:@"GetFriendlyName" 
 															  value:nil
@@ -77,8 +78,8 @@ static dispatch_queue_t _queue = nil;
 				if([ipAddresses containsObject:attemptIP]) {
 					NSLog(@"Already have a setting for: %@", attemptIP);
 				} else {
-					NSLog(@"Found %@ at %@:%@", switchName, attemptIP, _port);
-					[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:_port];
+					NSLog(@"Found %@ at %@:%@", switchName, attemptIP, self.port);
+					[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:self.port];
 				}
 			}
 		}
@@ -90,14 +91,14 @@ static dispatch_queue_t _queue = nil;
 }
 
 - (IBAction)addDevice:(id)sender {
-	[self addDeviceToUserDefaults:@"New Switch" ipAddress:@"" port:_port];
+	[self addDeviceToUserDefaults:@"New Switch" ipAddress:@"" port:self.port];
 }
 
-- (void) addDeviceToUserDefaults:(NSString*)switchName ipAddress:(NSString*)ipAddress port:(NSString*)port {
+- (void) addDeviceToUserDefaults:(NSString*)switchName ipAddress:(NSString*)ipAddress port:(NSString*)thePort {
 	NSDictionary* device = [NSDictionary dictionaryWithObjectsAndKeys:
 							switchName, @"SwitchName",
 							ipAddress, @"IPAddress",
-							port, @"Port", nil];
+							thePort, @"Port", nil];
 	NSMutableArray* devices = [[[NSUserDefaults standardUserDefaults] valueForKey:@"Devices"] mutableCopy];
 	[devices addObject:device];
 	[[NSUserDefaults standardUserDefaults] setValue:devices forKey:@"Devices"];

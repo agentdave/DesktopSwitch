@@ -10,12 +10,12 @@
 
 @interface SettingsWindowController : NSWindowController {
 	BOOL _scanning;
-	NSString* _port;
 }
 
 - (IBAction)scanForDevices:(id)sender;
 - (IBAction)addDevice:(id)sender;
 
 @property (retain) IBOutlet NSProgressIndicator* spinner;
+@property (retain) NSString* port;
 
 @end
