@@ -15,6 +15,7 @@
 		0B40606315B529E600C47490 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B40604515B529E600C47490 /* Cocoa.framework */; };
 		0B40608015B52FC700C47490 /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B40607F15B52FC700C47490 /* on.png */; };
 		0B40608215B52FCB00C47490 /* off.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B40608115B52FCB00C47490 /* off.png */; };
+		0BC32ED115B9171B0024C885 /* DesktopSwitch.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0BC32ED015B9171B0024C885 /* DesktopSwitch.icns */; };
 		0BF8144115B7CB6900D563D3 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BF8144015B7CB6900D563D3 /* Settings.xib */; };
 		0BF8144515B7CEFA00D563D3 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF8144415B7CEFA00D563D3 /* SettingsWindowController.m */; };
 		0BF8144815B7D05700D563D3 /* SwitchCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF8144715B7D05700D563D3 /* SwitchCommunication.m */; };
@@ -45,6 +46,9 @@
 		0B40605815B529E600C47490 /* DesktopSwitchAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesktopSwitchAppDelegate.m; sourceTree = "<group>"; };
 		0B40607F15B52FC700C47490 /* on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on.png; sourceTree = "<group>"; };
 		0B40608115B52FCB00C47490 /* off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = off.png; sourceTree = "<group>"; };
+		0BC32ED015B9171B0024C885 /* DesktopSwitch.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DesktopSwitch.icns; sourceTree = "<group>"; };
+		0BC32ED315B917C20024C885 /* plug-on.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "plug-on.pxm"; sourceTree = "<group>"; };
+		0BC32ED415B917C20024C885 /* plug-off.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "plug-off.pxm"; sourceTree = "<group>"; };
 		0BF8143F15B7CB1F00D563D3 /* DesktopSwitchTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesktopSwitchTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF8144015B7CB6900D563D3 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		0BF8144315B7CEFA00D563D3 /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
@@ -127,7 +131,10 @@
 		0B40604C15B529E600C47490 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0BC32ED315B917C20024C885 /* plug-on.pxm */,
+				0BC32ED415B917C20024C885 /* plug-off.pxm */,
 				0B40604D15B529E600C47490 /* DesktopSwitch-Info.plist */,
+				0BC32ED015B9171B0024C885 /* DesktopSwitch.icns */,
 				0B40604E15B529E600C47490 /* InfoPlist.strings */,
 				0B40605115B529E600C47490 /* DesktopSwitch-Prefix.pch */,
 				0B40605215B529E600C47490 /* main.m */,
@@ -211,6 +218,7 @@
 				0B40608015B52FC700C47490 /* on.png in Resources */,
 				0B40608215B52FCB00C47490 /* off.png in Resources */,
 				0BF8144115B7CB6900D563D3 /* Settings.xib in Resources */,
+				0BC32ED115B9171B0024C885 /* DesktopSwitch.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
