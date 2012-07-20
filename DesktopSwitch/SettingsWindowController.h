@@ -10,6 +10,7 @@
 
 @interface SettingsWindowController : NSWindowController {
 	BOOL _scanning;
+	NSString* _port;
 }
 
 - (IBAction)scanForDevices:(id)sender;

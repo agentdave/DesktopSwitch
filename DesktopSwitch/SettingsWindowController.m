@@ -29,6 +29,7 @@ static dispatch_queue_t _queue = nil;
     self = [super initWithWindow:window];
     if (self) {
 		_scanning = NO;
+		_port = @"49152"; // Seems to be a decent default port for UPnP
     }
     
     return self;
@@ -41,7 +42,7 @@ static dispatch_queue_t _queue = nil;
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (IBAction)scanForDevices:(id)sender {	
+- (IBAction)scanForDevices:(id)sender {
 	if(_scanning) {
 		_scanning = NO;
 		[self.spinner setHidden:YES];
@@ -55,8 +56,8 @@ static dispatch_queue_t _queue = nil;
 		[sender setTitle:@"Stop Scanning"];
 	}
 
-	NSString *ipRoot = [self systemCommand:@"ifconfig | grep inet | grep broadcast | sed -E 's/.*inet (([0-9]+\\.){3}).*/\\1/'"];
-	NSLog(@"ipRoot: %@", ipRoot);
+	NSString* ipRoot = [self systemCommand:@"ifconfig | grep inet | grep broadcast | "
+											"sed -E 's/.*inet (([0-9]+\\.){3}).*/\\1/'"];
 	
 	dispatch_async(_queue, ^{
 		for (NSUInteger i = 1; i < 255; i++) {
@@ -66,18 +67,18 @@ static dispatch_queue_t _queue = nil;
 
 			NSString* attemptIP = [NSString stringWithFormat:@"%@%u", ipRoot, i];
 			NSString* switchName = [SwitchCommunication sendRequest:attemptIP
-															   port:@"49152"
+															   port:_port
 															service:@"basicevent" 
 															 action:@"GetFriendlyName" 
 															  value:nil
 															timeout:0.5];
-			NSLog(@"Scanning: %@", attemptIP);
 			if(switchName) {
 				NSArray* ipAddresses = [[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Devices.IPAddress"];
 				if([ipAddresses containsObject:attemptIP]) {
 					NSLog(@"Already have a setting for: %@", attemptIP);
 				} else {
-					[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:@"49152"];
+					NSLog(@"Found %@ at %@:%@", switchName, attemptIP, _port);
+					[self addDeviceToUserDefaults:switchName ipAddress:attemptIP port:_port];
 				}
 			}
 		}
@@ -89,7 +90,7 @@ static dispatch_queue_t _queue = nil;
 }
 
 - (IBAction)addDevice:(id)sender {
-	[self addDeviceToUserDefaults:@"New Switch" ipAddress:@"" port:@"49152"];
+	[self addDeviceToUserDefaults:@"New Switch" ipAddress:@"" port:_port];
 }
 
 - (void) addDeviceToUserDefaults:(NSString*)switchName ipAddress:(NSString*)ipAddress port:(NSString*)port {
@@ -108,12 +109,18 @@ static dispatch_queue_t _queue = nil;
 	[task setArguments:[NSArray arrayWithObjects:@"-c",
 						[NSString stringWithFormat:@"/bin/sh -c \"%@\"",commandString],
 						nil]];
+	NSDictionary *defaultEnvironment = [[NSProcessInfo processInfo] environment];
+	NSMutableDictionary *environment = [[NSMutableDictionary alloc] initWithDictionary:defaultEnvironment];
+	[environment setObject:@"YES" forKey:@"NSUnbufferedIO"];
+	[task setEnvironment:environment];
 	NSPipe *pipe = [NSPipe pipe];
 	[task setStandardOutput:pipe];
+	[task setStandardInput:[NSPipe pipe]];
 	[task launch];
 	NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
 	[task waitUntilExit];
 	[task release];
+
 	return [[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] 
 			stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] retain];
 }

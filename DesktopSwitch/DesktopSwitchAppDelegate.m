@@ -7,17 +7,20 @@
 //
 //  Released under the MIT Licence:
 //
-//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 
-//  "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, 
-//  distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject 
-//  to the following conditions:
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+//  and associated documentation files (the "Software"), to deal in the Software without restriction,
+//  including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+//  and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+//  subject to the following conditions:
 //
-//  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//  The above copyright notice and this permission notice shall be included in all copies or substantial 
+//  portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
-//  FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
-//  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+//  LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+//  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+//  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 #import "DesktopSwitchAppDelegate.h"
 #import "SettingsWindowController.h"
@@ -32,6 +35,7 @@
 - (NSMenu *) createMenu;
 - (void) updateStatus:(NSString*)status forMenuItem:(NSMenuItem*)switchItem;
 - (void) defaultsChanged:(NSNotification*)notification;
+- (NSDictionary*)connectionInfoForMenuItem:(NSMenuItem*)menuItem;
 
 @end
 
@@ -43,9 +47,11 @@
 
 - (NSMenu *) createMenu
 {
+	_menuItemConnectionInfo = [[NSMutableArray alloc] init];
+
 	NSMenu *menu = [[NSMenu alloc] init];
 	NSMenuItem *menuItem;
-	
+
 	NSArray* switches = [[NSUserDefaults standardUserDefaults] valueForKeyPath:@"Devices"];
 	for(NSDictionary* switchDictionary in switches) {
 		NSString* switchName = [switchDictionary valueForKey:@"SwitchName"];
@@ -54,15 +60,20 @@
 
 		menuItem = [menu addItemWithTitle:switchName
 								   action:@selector(toggleSwitch:)
-							keyEquivalent:@""];	
-		[menuItem setTarget:self];		
+							keyEquivalent:@""];
+		[menuItem setTarget:self];
+		[_menuItemConnectionInfo addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+											menuItem, @"MenuItem",
+											switchIPAddress, @"IPAddress",
+											switchPort, @"Port",
+											nil]];
 
 		NSString* status = [SwitchCommunication sendRequest:switchIPAddress
 													   port:switchPort
 													service:@"basicevent" 
 													 action:@"GetBinaryState" 
 													  value:nil
-													timeout:0.2];
+													timeout:0.5];
 		[self updateStatus:status forMenuItem:menuItem];
 	}
 
@@ -84,7 +95,19 @@
 	
 	[menuItem setToolTip:@"Click to Remove the DesktopSwitch Menu from the task bar."];
 	[menuItem setTarget:self];
-	
+
+	if(self.statusItem && [self.statusItem menu]) {
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(handleStatusItemMenuOpened:)
+													 name:NSMenuDidBeginTrackingNotification
+												   object:[self.statusItem menu]];
+	}
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(handleStatusItemMenuOpened:)
+												 name:NSMenuDidBeginTrackingNotification
+											   object:menu];
+
 	return menu;
 }
 
@@ -95,10 +118,6 @@
 								 nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 
-	// TODO: Make this into an actual settings panel
-	ipAddress = @"10.0.1.24";
-	port = @"49152";
-	
 	self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
 
 	NSMenu *menu = [self createMenu];
@@ -113,7 +132,6 @@
 }
 
 - (void)openSettings:(id)sender {
-	NSLog(@"Implement me!!!");
 	if(!self.settingsController) {
 		self.settingsController = [[SettingsWindowController alloc] initWithWindowNibName:@"Settings"];
 	}
@@ -122,8 +140,9 @@
 }
 
 - (void) turnOn:(id)sender {
-	NSString* status = [SwitchCommunication sendRequest:ipAddress
-												   port:port
+	NSDictionary* connection = [self connectionInfoForMenuItem:sender];
+	NSString* status = [SwitchCommunication sendRequest:[connection objectForKey:@"IPAddress"]
+												   port:[connection objectForKey:@"Port"]
 												service:@"basicevent" 
 												 action:@"SetBinaryState" 
 												  value:@"1"];
@@ -131,8 +150,9 @@
 }
 
 - (void) turnOff:(id)sender {
-	NSString* status = [SwitchCommunication sendRequest:ipAddress
-												   port:port
+	NSDictionary* connection = [self connectionInfoForMenuItem:sender];
+	NSString* status = [SwitchCommunication sendRequest:[connection objectForKey:@"IPAddress"]
+												   port:[connection objectForKey:@"Port"]
 												service:@"basicevent" 
 												 action:@"SetBinaryState" 
 												  value:@"0"];
@@ -180,6 +200,27 @@
 - (void) defaultsChanged:(NSNotification*)notification {
 	NSMenu *menu = [self createMenu];
 	[self.statusItem setMenu:menu];
+}
+
+- (NSDictionary*)connectionInfoForMenuItem:(NSMenuItem*)menuItem {
+	for(NSDictionary* connectionDictionary in _menuItemConnectionInfo) {
+		if([connectionDictionary objectForKey:@"MenuItem"] == menuItem) {
+			return connectionDictionary;
+		}
+	}
+	return nil;
+}
+
+- (void) handleStatusItemMenuOpened:(NSNotification*)notification {
+	for(NSDictionary* connectionDictionary in _menuItemConnectionInfo) {
+		NSString* status = [SwitchCommunication sendRequest:[connectionDictionary objectForKey:@"IPAddress"]
+													   port:[connectionDictionary objectForKey:@"Port"]
+													service:@"basicevent" 
+													 action:@"GetBinaryState" 
+													  value:nil
+													timeout:0.5];
+		[self updateStatus:status forMenuItem:[connectionDictionary objectForKey:@"MenuItem"]];
+	}
 }
 
 @end

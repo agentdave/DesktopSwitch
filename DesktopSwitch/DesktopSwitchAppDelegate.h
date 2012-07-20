@@ -14,8 +14,7 @@
 	NSImage* _onImage;
 	NSImage* _offImage;
 
-	NSString* ipAddress;
-	NSString* port;
+	NSMutableArray* _menuItemConnectionInfo;
 }
 
 @property (retain) NSStatusItem* statusItem;
