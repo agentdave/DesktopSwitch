@@ -53,14 +53,14 @@
 		request = [NSMutableURLRequest requestWithURL:url];
 	} else {
 		request = [NSMutableURLRequest requestWithURL:url 
-										  cachePolicy:NSURLCacheStorageNotAllowed
+										  cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 									  timeoutInterval:timeout];		
 	}
 
 	[request setHTTPMethod:@"POST"];
 	
 	NSString* contentType = @"text/xml; charset='utf-8'";
-	NSString* contentLength = [NSString stringWithFormat:@"%u", [requestBody length]];
+	NSString* contentLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestBody length]];
 	// Grrr... Seems it's rather important here to use double-quotes. Single quotes just won't cut it.
 	NSString* soapAction = [NSString stringWithFormat:@"\"urn:Belkin:service:%@:1#%@\"", service, action];
 	NSDictionary* headers = [NSDictionary dictionaryWithObjectsAndKeys:

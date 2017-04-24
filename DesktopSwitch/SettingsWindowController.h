@@ -15,8 +15,8 @@
 - (IBAction)scanForDevices:(id)sender;
 - (IBAction)addDevice:(id)sender;
 
-@property (retain) IBOutlet NSProgressIndicator* spinner;
-@property (retain) NSString* port;
-@property (retain) NSString* currentScanStatus;
+@property (strong) IBOutlet NSProgressIndicator* spinner;
+@property (strong) NSString* port;
+@property (strong) NSString* currentScanStatus;
 
 @end

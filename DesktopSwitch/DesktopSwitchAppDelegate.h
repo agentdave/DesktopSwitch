@@ -17,7 +17,7 @@
 	NSMutableArray* _menuItemConnectionInfo;
 }
 
-@property (retain) NSStatusItem* statusItem;
-@property (retain) SettingsWindowController* settingsController;
+@property (strong) NSStatusItem* statusItem;
+@property (strong) SettingsWindowController* settingsController;
 
 @end

@@ -11,14 +11,14 @@
 
 int main(int argc, char *argv[])
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [NSApplication sharedApplication];
+    @autoreleasepool {
+        [NSApplication sharedApplication];
 	
-    DesktopSwitchAppDelegate *menu = [[DesktopSwitchAppDelegate alloc] init];
-    [NSApp setDelegate:menu];
-    [NSApp run];
+        DesktopSwitchAppDelegate *menu = [[DesktopSwitchAppDelegate alloc] init];
+        [NSApp setDelegate:menu];
+        [NSApp run];
 	
-    [pool release];
+    }
 	
     return EXIT_SUCCESS;
 //	return NSApplicationMain(argc, (const char **)argv);

@@ -73,7 +73,7 @@ static dispatch_queue_t _queue = nil;
 					break;
 				}
 
-				NSString* attemptIP = [NSString stringWithFormat:@"%@%u", ipRoot, i];
+				NSString* attemptIP = [NSString stringWithFormat:@"%@%lu", ipRoot, (unsigned long)i];
 				self.currentScanStatus = [NSString stringWithFormat:@"Scanning: %@:%@", attemptIP, self.port];
 				NSString* switchName = [SwitchCommunication sendRequest:attemptIP
 																   port:self.port
@@ -130,10 +130,9 @@ static dispatch_queue_t _queue = nil;
 	[task launch];
 	NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
 	[task waitUntilExit];
-	[task release];
 
-	return [[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] 
-			stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] retain];
+	return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] 
+			stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 @end
